@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: netwebapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: netwebapp
+  template:
+    metadata:
+      labels:
+        app: netwebapp
+    spec:
+      containers:
+        - name: netwebapp
+          image: netwebapp:1.1.1
+          imagePullPolicy: IfNotPresent
