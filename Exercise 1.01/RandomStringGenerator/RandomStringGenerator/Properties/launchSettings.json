@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "RandomStringGenerator": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
