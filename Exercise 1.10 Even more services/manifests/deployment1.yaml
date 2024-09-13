@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      volumes:
+          - name: shared-logger
+            emptyDir: {}
+      containers:
+        - name: logoutput-reader
+          image: logout-reader:1.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: shared-logger
+            mountPath: /usr/src/app/logs
+        - name: logout-writer
+          image: logout-writer:1.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: shared-logger
+            mountPath: /usr/src/app/logs
