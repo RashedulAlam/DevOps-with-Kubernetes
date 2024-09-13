@@ -11,6 +11,5 @@ k3d cluster delete ex-110 && k3d cluster create ex-110 --api-port 127.0.0.1:6443
 k3d image import logout-writer:1.0  --cluster ex-110 && k3d image import logout-reader:1.0  --cluster ex-110
 
 kubectl apply -f ./manifests/deployment1.yaml
-kubectl apply -f ./manifests/deployment2.yaml
 kubectl apply -f ./manifests/service1.yaml
 kubectl apply -f ./manifests/ingress.yaml
