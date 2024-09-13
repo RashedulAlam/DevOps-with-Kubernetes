@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angularapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angularapp
+  template:
+    metadata:
+      labels:
+        app: angularapp
+    spec:
+      containers:
+        - name: angularapp
+          image: angularapp:1.0
+          imagePullPolicy: IfNotPresent
