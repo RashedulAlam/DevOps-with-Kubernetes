@@ -1,0 +1,6 @@
+@ImageFinder_HostAddress = http://localhost:5195
+
+GET {{ImageFinder_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
