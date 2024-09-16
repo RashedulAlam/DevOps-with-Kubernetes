@@ -1,0 +1,41 @@
+﻿@page
+@using static Constants
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to Todo Application</h1>
+    <p>You can create todo now.</p>
+</div>
+
+<div class="text-center">
+    <h2>Create Todo</h2>
+    
+    <img src="@Constants.ImageUrl" height="400" width="400"/>
+    
+    <div class="text-center mt-2">
+        <form method="post">
+            Title:
+
+            <input asp-for="Todo.Title" />
+
+            <input type="submit" />
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-5">
+    <h2>Todo List</h2>
+    
+    <div class="d-flex justify-content-center">
+        <ul class="text-start">
+            @foreach (var todo in Model.Todos)
+            {
+                <li>@todo.Title</li>
+            }
+        </ul>
+    </div>
+    
+</div>
