@@ -1,0 +1,15 @@
+<div class="flex flex-col items-center gap-4">
+  <h2 class="text-2xl font-bold">Create Todo Items</h2>
+
+  <div class="flex flex-row">
+    <img [src]="ImageUrl" alt="Todo Title Image" class="h-[300px] w-[400px]" />
+  </div>
+
+  <form [formGroup]="todoForm" (ngSubmit)="createTodo()" class="flex flex-col w-full items-center gap-4">
+    <div class="flex flex-row gap-2">
+      <label for="title">Title: </label>
+      <input id="title" class="w-[400px]" type="text" formControlName="title">
+    </div>
+    <button type="submit" class="bg-white w-max p-3 rounded-md">Create</button>
+  </form>
+</div>

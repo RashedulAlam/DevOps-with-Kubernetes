@@ -1,1 +1,9 @@
-<p>todo-list works!</p>
+<div class="flex flex-col items-center gap-4">
+  <h2 class="text-2xl font-bold">Your Todo Items: </h2>
+  <p *ngIf="!todos.length">You do not have any todos. Please create few!</p>
+  <ul class="list-disc">
+    <li class="list-item" *ngFor="let item of todos">
+      {{item.title}}
+    </li>
+  </ul>
+</div>

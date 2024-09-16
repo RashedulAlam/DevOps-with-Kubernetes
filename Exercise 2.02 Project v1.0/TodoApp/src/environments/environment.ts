@@ -1,4 +1,3 @@
 export const environment = {
-  todoServiceUrl : 'http://localhost:5188/',
-  production: true,
+  todoServiceUrl: 'http://localhost:8081/todolist-service/',
 };
