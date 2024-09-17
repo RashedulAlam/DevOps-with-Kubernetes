@@ -397,3 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 secrets/secret.txt
+Exercise 2.05 Secrets/manifests/secrect/secret.yaml
+**/**/secret.yaml
+**/**/secret.txt
