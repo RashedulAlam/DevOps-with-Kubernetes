@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todolist-ingress
+  namespace: ex-204
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: todolistapp-svc
+            port:
+              number: 80
+      - path: /todolist-service
+        pathType: Prefix
+        backend:
+          service:
+            name: todolistservice-svc
+            port:
+              number: 80

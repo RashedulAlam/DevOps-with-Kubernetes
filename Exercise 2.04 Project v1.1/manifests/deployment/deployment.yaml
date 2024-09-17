@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todolistservice
+  namespace: ex-204
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todolistservice
+  template:
+    metadata:
+      labels:
+        app: todolistservice
+    spec:
+      volumes:
+          - name: cache-storage
+            persistentVolumeClaim:
+              claimName: logger-storage-claim
+      containers:
+        - name: todolistservice
+          image: todoservice:1.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: cache-storage
+            mountPath: /usr/src/app/files
+          securityContext:
+            runAsUser: 0   # Root user as otherwise permission not getting to write on the file
+            runAsGroup: 0  # Root group as otherwise permission not getting to write on the file
+            allowPrivilegeEscalation: true
+
+--- 
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todolist-app
+  namespace: ex-204
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todolist-app
+  template:
+    metadata:
+      labels:
+        app: todolist-app
+    spec:
+      volumes:
+          - name: cache-storage
+            persistentVolumeClaim:
+              claimName: logger-storage-claim
+      containers:
+        - name: todolist-app
+          image: todoapp:1.0
+          imagePullPolicy: IfNotPresent
