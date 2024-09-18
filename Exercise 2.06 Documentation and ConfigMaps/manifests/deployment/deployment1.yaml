@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logoutput
+  namespace: ex-206
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logoutput
+  template:
+    metadata:
+      labels:
+        app: logoutput
+    spec:
+      volumes:
+          - name: shared-logger
+            # persistentVolumeClaim:
+            #   claimName: logger-storage-claim
+            emptyDir: {}
+          - name : configuration
+            configMap:
+              name: logout-app-configmap
+              items:
+              - key: information.txt
+                path: 'information.txt'
+      containers:
+        - name: logoutput-reader
+          image: logout-reader:3.0
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: MESSAGE
+            valueFrom:
+              configMapKeyRef:
+                name: logout-app-configmap
+                key: MESSAGE
+          volumeMounts:
+          - name: shared-logger
+            mountPath: /usr/src/app/files
+          - name: configuration
+            mountPath: /usr/src/app/configs
+            readOnly: true
+          # securityContext:
+          #   runAsUser: 0   # Root user as otherwise permission not getting to write on the file
+          #   runAsGroup: 0  # Root group as otherwise permission not getting to write on the file
+          #   allowPrivilegeEscalation: true
+        - name: logout-writer
+          image: logout-writer:3.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - name: shared-logger
+            mountPath: /usr/src/app/files
+          # securityContext:
+          #   runAsUser: 0   # Root user as otherwise permission not getting to write on the file
+          #   runAsGroup: 0  # Root group as otherwise permission not getting to write on the file
+          #   allowPrivilegeEscalation: true
