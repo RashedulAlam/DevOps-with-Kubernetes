@@ -9,5 +9,6 @@
         public const string ReaderEnvironmentVariable = "Is_READER";
         public const string PingPongFileName = "pingpong-log.txt";
         public const string PingPongServiceKey = "PingPongServiceUrl";
+        public const string EnvironmentVariableName = "MESSAGE";
     }
 }

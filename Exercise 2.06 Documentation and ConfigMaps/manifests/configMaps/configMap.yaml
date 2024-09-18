@@ -4,6 +4,5 @@ metadata:
   name: logout-app-configmap
   namespace: ex-206
 data:
-  information.txt: |
-    this text is from file from configmap
+  information.txt: "this text is from file from configmap"
   MESSAGE : "Hello From ConfigMap"

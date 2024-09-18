@@ -51,7 +51,14 @@ if (isReader)
 
             var text = stringBuilder.ToString();
 
-            return $"{DateTime.UtcNow:s}Z: {text}.\n{responseContent}";
+            var configMapFileContent = await File.ReadAllTextAsync(Path.Join(Path.Join(
+                configuration.GetValue<string>(Constants.ConfigurationFilePathKey),
+                Constants.ConfigurationFileName)));
+
+            var environmentVariableValue = Environment.GetEnvironmentVariable(Constants.EnvironmentVariableName);
+
+            return
+                $"file content: {configMapFileContent}\nenv variable: {Constants.EnvironmentVariableName}={environmentVariableValue}\n{DateTime.UtcNow:s}Z: {text}.\n{responseContent}";
         })
         .WithName("GetHashLog")
         .WithOpenApi();
