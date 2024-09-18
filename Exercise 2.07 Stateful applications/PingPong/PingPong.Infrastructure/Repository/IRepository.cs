@@ -4,6 +4,6 @@
     {
         Task<TEntity?> GetFirst();
         Task<int> Add(TEntity entity);
-        void Update(TEntity entity);
+        Task<int> Update(TEntity entity);
     }
 }

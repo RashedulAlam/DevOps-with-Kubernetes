@@ -5,18 +5,27 @@ namespace PingPong.Business.Services;
 
 public class PingStorage(IUnitOfWork unitOfWork) : IPingStorage
 {
+    private readonly IRepository<PingCount> _repository = unitOfWork.GetRepository<PingCount>();
+
     public async Task<int> GetCount()
     {
-        var existingCount = await unitOfWork.GetRepository<PingCount>().GetFirst();
+        var existingCount = await this._repository.GetFirst();
 
-        if (existingCount is not null) return existingCount.Count;
+        if (existingCount is not null)
+        {
+            existingCount.Count += 1;
+
+            await this._repository.Update(existingCount);
+
+            return ((await this._repository.GetFirst())!).Count;
+        };
 
         var newCount = new PingCount
         {
             Count = 1
         };
 
-        await unitOfWork.GetRepository<PingCount>().Add(newCount);
+        await this._repository.Add(newCount);
 
         return newCount.Count;
 
@@ -24,13 +33,13 @@ public class PingStorage(IUnitOfWork unitOfWork) : IPingStorage
 
     public async Task RestCount()
     {
-        var existingCount = await unitOfWork.GetRepository<PingCount>().GetFirst();
+        var existingCount = await this._repository.GetFirst();
 
         if (existingCount is not null)
         {
             existingCount.Count = 0;
 
-            unitOfWork.GetRepository<PingCount>().Update(existingCount);
+            await this._repository.Update(existingCount);
         }
     }
 }

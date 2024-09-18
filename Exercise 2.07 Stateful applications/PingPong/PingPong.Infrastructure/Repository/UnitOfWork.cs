@@ -1,4 +1,5 @@
-﻿using PingPong.Infrastructure.Context;
+﻿using PingPong.Domain.Entity;
+using PingPong.Infrastructure.Context;
 
 namespace PingPong.Infrastructure.Repository;
 

@@ -11,15 +11,17 @@ public class Repository<TEntity>(PingPongContext context) : IRepository<TEntity>
         return context.Set<TEntity>().FirstOrDefaultAsync();
     }
 
-    public Task<int> Add(TEntity entity)
+    public async Task<int> Add(TEntity entity)
     {
-        context.Set<TEntity>().AddAsync(entity);
+        await context.Set<TEntity>().AddAsync(entity);
 
-        return context.SaveChangesAsync();
+        return await context.SaveChangesAsync();
     }
 
-    public void Update(TEntity entity)
+    public Task<int> Update(TEntity entity)
     {
         context.Set<TEntity>().Update(entity);
+
+        return context.SaveChangesAsync();
     }
 }
