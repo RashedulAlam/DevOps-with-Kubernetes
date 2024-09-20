@@ -38,3 +38,5 @@ kubectl apply -f ./manifests/statefulSet/database.yaml
 kubectl apply -f ./manifests/cronjob/cronjob.yaml
 
 kubectl get all -n ex-208
+
+./install-monitoring.sh
