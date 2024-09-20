@@ -10,6 +10,11 @@ using TodoService.Domain.Entity;
 using TodoService.Infrastructure;
 using TodoService.Infrastructure.Context;
 using TodoService.Infrastructure.Repository;
+using TodoService.Infrastructure.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using TodoService.Filters;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +32,7 @@ builder.Services.AddHttpLogging(logging =>
     logging.MediaTypeOptions.AddText("application/json");
     logging.RequestHeaders.Add("User-Agent");
 });
+builder.Services.AddValidatorsFromAssemblyContaining<TodoValidator>();
 
 
 builder.Services.AddDbContext<TodoContext>(x =>
@@ -88,7 +94,8 @@ app.MapPost("/todos", async ([FromBody] TodoCreateRequest todo, [FromServices] I
         return newTodo;
 })
 .WithName("CreateTodos")
-.WithOpenApi();
+.WithOpenApi()
+.AddEndpointFilter<ValidationFilter<TodoCreateRequest>>();
 
 
 app.MapGet("/find-image", async ([FromServices] HttpClient httpClient, IConfiguration configuration) =>
