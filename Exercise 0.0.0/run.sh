@@ -5,3 +5,5 @@ kubectl apply -f ./manifests/namespace.yaml
 kubectl apply -f ./manifests/statefulSetLearning.yaml
 
 kubectl run busybox --image=busybox -it --rm --restart=Never --namespace=ex-000 -- sh
+
+# k3d cluster create --api-port 127.0.0.1:6443

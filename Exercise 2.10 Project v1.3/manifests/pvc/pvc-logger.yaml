@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: logger-storage-claim
+  namespace: ex-208
+spec:
+  storageClassName: log-shared-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 25Mi

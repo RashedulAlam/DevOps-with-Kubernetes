@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: application-configuration
+  namespace: ex-208
+data:
+  DATABASE_SERVER_URL: "Host=postgres-svc;Port=5432;Database=pingpong;Username={0};Password={1}"

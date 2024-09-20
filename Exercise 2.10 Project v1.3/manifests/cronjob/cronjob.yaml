@@ -1,0 +1,47 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: daily-todo
+  namespace: ex-208
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          volumes:
+              - name: cache-storage
+                persistentVolumeClaim:
+                  claimName: logger-storage-claim
+          containers:
+          - name: todolistservice
+            image: todoservice:2.0
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: cache-storage
+              mountPath: /usr/src/app/files
+            securityContext:
+              runAsUser: 0   # Root user as otherwise permission not getting to write on the file
+              runAsGroup: 0  # Root group as otherwise permission not getting to write on the file
+              allowPrivilegeEscalation: true
+            env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: 'PROD'
+            - name : cronjob
+              value: "true"
+            - name: DATABASE_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: application-configuration
+                  key: DATABASE_SERVER_URL
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-secrets
+                  key: DB_PASSWORD
+          restartPolicy: OnFailure
