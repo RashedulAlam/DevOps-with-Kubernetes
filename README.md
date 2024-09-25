@@ -17,6 +17,6 @@ This repository provides examples and projects for deploying and managing contai
 - **Docker**
 - **Helm**
 - **Prometheus** & **Grafana**
-- **GitLab CI**
 - **Bash Scripting**
+- **K3d**
 
